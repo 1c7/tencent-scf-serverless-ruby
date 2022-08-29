@@ -51,17 +51,18 @@ docker run -p 9000:9000 tencent-scf
 
 ## 一些背景信息：
 * 我的电脑是 MacBook Pro（14英寸，2021年）芯片是 Apple M1 Pro。
-* 我看到文档里有一句
+* 我看到腾讯云云函数的[文档里有一句](https://cloud.tencent.com/document/product/583/56051)
 
 > 云函数当前是基于 X86 架构运行的，所以暂不支持运行在 ARM 平台上构建的镜像。ARM 的平台典型如 Apple Mac 搭载 M1 芯片的 PC 端。
 
 ![](./img/x86.jpg)
 
-所以我用了 AWS Codebuild 来负责 `docker build` Docker Image
+所以我用了 AWS Codebuild 来负责构建 Docker Image。  
+以下截图的意思是，我用的容器镜像是 `aws/codebuild/amazonlinux2-x86_64-standard:4.0`
 
 ![](img/codebuild.jpg)
 
-用的容器镜像是 `aws/codebuild/amazonlinux2-x86_64-standard:4.0`
+注意：TCR 上的镜像是 AWS Codebuild 运行 `docker build` 和 `docker push` 得到的。不是我本地 M1 Pro build + push 的。
 
 ## 关于架构
 1. 腾讯云 TCR 里显示架构 arm64 并不碍事。这个并不影响。可以正确运行。
@@ -69,13 +70,12 @@ docker run -p 9000:9000 tencent-scf
 ![](img/tcr.jpg)
 
 # 解决方法（简略版）
-1. 新建函数的时候除了选择你自己的镜像，其他保留默认即可。  
-
+## 1. 新建函数的时候除了选择你自己的镜像，其他保留默认即可。  
 ![](img/create-scf-function.jpg)
 
-2. 这个默认触发器是正确的
+## 2. 这个默认触发器是正确的
 ![](img/trigger-correct.jpg)
 
-3. 不要改成 API 网关触发
+## 3. 不要改成 API 网关触发
 ![](img/trigger-wrong.jpg)
 
