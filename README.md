@@ -51,6 +51,10 @@ docker run -p 9000:9000 tencent-scf
 
 ## 一些背景信息：
 * 我的电脑是 MacBook Pro（14英寸，2021年）芯片是 Apple M1 Pro。
+
+![](img/m1pro.jpg)
+
+
 * 我看到腾讯云云函数的[文档里有一句](https://cloud.tencent.com/document/product/583/56051)
 
 > 云函数当前是基于 X86 架构运行的，所以暂不支持运行在 ARM 平台上构建的镜像。ARM 的平台典型如 Apple Mac 搭载 M1 芯片的 PC 端。
