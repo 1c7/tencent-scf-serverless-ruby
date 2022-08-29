@@ -109,12 +109,25 @@ phases:
 ![](img/tcr.jpg)
 
 # 解决方法（简略版）
-## 1. 新建函数的时候除了选择你自己的镜像，其他保留默认即可。  
+## 1. 新建腾讯云的[云函数](https://console.cloud.tencent.com/scf/list?rid=1&ns=all)时，除了选择你自己的镜像，其他设置保留默认即可。  
 ![](img/create-scf-function.jpg)
 
-## 2. 这个默认触发器是正确的
+## 2. 默认触发器是正确的。
 ![](img/trigger-correct.jpg)
 
-## 3. 不要改成 API 网关触发
+## 3. 改成 `API 网关触发` 就会出问题。
 ![](img/trigger-wrong.jpg)
+
+我没空深究这些不同触发器的细枝末节，我只知道 `默认触发器` 的效果和我本地运行的效果一样。
+而用 `API 网关触发` 就会返回一堆 JSON，而不是我想要的返回结果。
+
+![](img/json.jpg)
+
+
+## 正确的返回结果
+如图
+![](img/web-correct.jpg)
+
+因为代码就是这样写的  
+![](img/code-correct.jpg)
 
