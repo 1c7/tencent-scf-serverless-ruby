@@ -43,7 +43,8 @@ docker run -p 9000:9000 tencent-scf
 * Gemfile
 * Gemfile.lock
 
-# 解决方法（详细版）
+# 解决方法（详细版）(可能不适用于你的情况，可以跳过不看)
+[点击此处](https://github.com/1c7/tencent-scf-serverless-ruby#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%E7%AE%80%E7%95%A5%E7%89%88) 直接看 `解决方案（简略版）`
 
 ## 一些背景信息：
 * 我的电脑是 MacBook Pro（14英寸，2021年）芯片是 Apple M1 Pro。
