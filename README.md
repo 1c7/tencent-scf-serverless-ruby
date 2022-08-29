@@ -75,20 +75,23 @@ version: 0.2
 
 env:
   variables:
-    # (请修改这个）你要推送到腾讯 TCR 的镜像 URL。(另外，这个也会作为 docker build 的 --cache-from 参数）
-    IMAGE_URL: ccr.ccs.tencentyun.com/zhengcheng/zhengcheng-docker-repo:latest
-    
-    # (请修改这个）腾讯云 TCR 的密码。
-    TENCENT_TCR_PASSWORD: [密码当然填你自己的]
-    
-    # 本地临时用一下的 tag 名字。
-    DOCKER_TAG_NAME_TEMP: tencent-serverless-image
+   # (请修改这个）你要推送到腾讯 TCR 的镜像 URL。(另外，这个也会作为 docker build 的 --cache-from 参数）
+   IMAGE_URL: ccr.ccs.tencentyun.com/zhengcheng/zhengcheng-docker-repo:latest
+
+   # (请修改这个）腾讯云的账号 ID
+   TENCENT_ACCOUNT_ID: 100006309506
+   
+   # (请修改这个）腾讯云 TCR 的密码。
+   TENCENT_TCR_PASSWORD: [密码当然填你自己的]
+   
+   # 本地临时用一下的 tag 名字。
+   DOCKER_TAG_NAME_TEMP: tencent-serverless-image
 
 phases:
   pre_build:
     commands:
       - echo 登录到腾讯云
-      - echo $TENCENT_TCR_PASSWORD | docker login --username=100006309506 --password-stdin  https://ccr.ccs.tencentyun.com
+      - echo $TENCENT_TCR_PASSWORD | docker login --username=$TENCENT_ACCOUNT_ID --password-stdin  https://ccr.ccs.tencentyun.com
   build:
     commands:
       # 看一下文件
