@@ -64,6 +64,45 @@ docker run -p 9000:9000 tencent-scf
 
 注意：TCR 上的镜像是 AWS Codebuild 运行 `docker build` 和 `docker push` 得到的。不是我本地 M1 Pro build + push 的。
 
+### 如果你也想用 AWS Codebuild 构建镜像，以下是 `buildspec.yml` 供你参考。
+
+```yml
+version: 0.2
+
+env:
+  variables:
+    # (请修改这个）你要推送到腾讯 TCR 的镜像 URL。(另外，这个也会作为 docker build 的 --cache-from 参数）
+    IMAGE_URL: ccr.ccs.tencentyun.com/zhengcheng/zhengcheng-docker-repo:latest
+    
+    # (请修改这个）腾讯云 TCR 的密码。
+    TENCENT_TCR_PASSWORD: [密码当然填你自己的]
+    
+    # 本地临时用一下的 tag 名字。
+    DOCKER_TAG_NAME_TEMP: tencent-serverless-image
+
+phases:
+  pre_build:
+    commands:
+      - echo 登录到腾讯云
+      - echo $TENCENT_TCR_PASSWORD | docker login --username=100006309506 --password-stdin  https://ccr.ccs.tencentyun.com
+  build:
+    commands:
+      # 看一下文件
+      - ls
+      - yum install -y tree
+      - tree
+
+      # 构建镜像
+      - docker build --tag $DOCKER_TAG_NAME_TEMP --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $IMAGE_URL --file Dockerfile ./
+
+      # 打标签
+      - docker tag $DOCKER_TAG_NAME_TEMP:latest $IMAGE_URL
+
+      # 推送镜像。
+      - docker push $IMAGE_URL
+```
+
+
 ## 关于架构
 1. 腾讯云 TCR 里显示架构 arm64 并不碍事。这个并不影响。可以正确运行。
 
